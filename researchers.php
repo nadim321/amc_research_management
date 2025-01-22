@@ -37,7 +37,7 @@ if (isset($_GET['delete']) && checkRole(1)) {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="login-container">
+    <div class="div-container">
         <h1>Researchers Management</h1>
         
         <!-- Display Researchers -->

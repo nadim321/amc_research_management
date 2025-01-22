@@ -23,7 +23,7 @@ $reports = $stmt->fetchAll(PDO::FETCH_ASSOC); // Fetch all reports
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="body-container">
+    <div class="div-container">
         <h1>Reports</h1>
         <table>
             <thead>
