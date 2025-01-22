@@ -11,10 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_researcher'])) {
     checkRole(1); // Admin role
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
+    $password = password($_POST['password'], PASSWORD_BCRYPT);
     $role_id = 2; // Researcher role
 
-    $stmt = $pdo->prepare('INSERT INTO users (name, email, password_hash, role_id) VALUES (?, ?, ?, ?)');
+    $stmt = $pdo->prepare('INSERT INTO users (name, email, password, role_id) VALUES (?, ?, ?, ?)');
     $stmt->execute([$name, $email, $password, $role_id]);
     header('Location: researchers.php');
 }

@@ -1,5 +1,4 @@
 <?php
-session_start(); // Ensure session is started
 
 // Generate a CSRF token
 function generate_csrf_token() {

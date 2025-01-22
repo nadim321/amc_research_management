@@ -19,9 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($stmt->fetch()) {
             $error = 'Email is already in use.';
         } else {
-            $password_hash = password_hash($password, PASSWORD_BCRYPT);
-            $stmt = $pdo->prepare('INSERT INTO users (name, email, password_hash, role_id) VALUES (?, ?, ?, ?)');
-            $stmt->execute([$name, $email, $password_hash, $role_id]);
+            $password = password($password, PASSWORD_BCRYPT);
+            $stmt = $pdo->prepare('INSERT INTO users (name, email, password, role_id) VALUES (?, ?, ?, ?)');
+            $stmt->execute([$name, $email, $password, $role_id]);
             header('Location: login.php');
         }
     }

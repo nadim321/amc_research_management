@@ -19,11 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "All fields are required.";
     } else {
         // Hash the password
-        $password_hash = hash('sha256', $password);
+        $password = hash('sha256', $password);
 
         // Insert into the database
-        $stmt = $pdo->prepare('INSERT INTO users (name, email, password_hash, role_id) VALUES (?, ?, ?, ?)');
-        $stmt->execute([$name, $email, $password_hash, $role_id]);
+        $stmt = $pdo->prepare('INSERT INTO users (name, email, password, role_id) VALUES (?, ?, ?, ?)');
+        $stmt->execute([$name, $email, $password, $role_id]);
         echo "User created successfully.";
     }
 }
