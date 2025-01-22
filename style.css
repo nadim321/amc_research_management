@@ -1,0 +1,83 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #e9eef7; /* Light background similar to your example */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Login Container */
+.login-container {
+    background: white;
+    border-radius: 12px;
+    padding: 30px 25px;
+    width: 350px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    text-align: center;
+}
+
+/* Login Title */
+.login-container h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Input Fields */
+.login-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+/* Login Button */
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    background: #5f4dc4; /* Soft purple */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.login-container button:hover {
+    background: #4a3ca6; /* Darker shade on hover */
+}
+
+/* Sign Up Link */
+.login-container a {
+    display: block;
+    margin-top: 15px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #5f4dc4;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+}
+
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #666;
+}
