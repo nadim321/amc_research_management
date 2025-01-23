@@ -1,10 +1,10 @@
 <?php
 require '../Common/auth.php';
 require '../Common/db.php';
-
+echo $_SESSION['role_id'] ;
 // Restrict to Admin and Researchers
 if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 2) {
-    header('HTTP/1.0 403 Forbidden');
+    die("You do not have permission to access this page.");
     exit;
 }
 

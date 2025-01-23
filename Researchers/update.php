@@ -6,7 +6,7 @@ require '../Common/csrf.php';
 
 // Restrict to Admin and Researchers
 if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 2) {
-    header('HTTP/1.0 403 Forbidden');
+    die("You do not have permission to access this page.");
     exit;
 }
 

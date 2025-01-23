@@ -4,7 +4,7 @@ require '../Common/db.php';
 
 // Restrict to Admin only
 if ($_SESSION['role_id'] != 1) {
-    header('HTTP/1.0 403 Forbidden');
+    die("You do not have permission to access this page.");
     exit;
 }
 
