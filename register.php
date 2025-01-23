@@ -1,5 +1,5 @@
 <?php
-require 'db.php';
+require 'Common/db.php';
 
 $error = '';
 
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $password = password($password, PASSWORD_BCRYPT);
             $stmt = $pdo->prepare('INSERT INTO users (name, email, password, role_id) VALUES (?, ?, ?, ?)');
             $stmt->execute([$name, $email, $password, $role_id]);
-            header('Location: login.php');
+            header('Location: index.php');
         }
     }
 }
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <button type="submit">Register</button>
         </form>
 
-        <a href="login.php">Already have an account? Login</a>
+        <a href="index.php">Already have an account? Login</a>
     </div>
 </body>
 </html>

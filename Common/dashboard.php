@@ -1,6 +1,6 @@
 <?php
-require 'auth.php'; // Ensures user is authenticated
-require 'db.php';
+require 'Common/auth.php'; // Ensures user is authenticated
+require 'Common/db.php';
 
 $user_role = $_SESSION['role_id'];
 $user_name = $_SESSION['user_id'];

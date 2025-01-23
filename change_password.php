@@ -1,7 +1,7 @@
 <?php
-require 'auth.php';
-require 'db.php';
-require 'csrf.php';
+require 'Common/auth.php';
+require 'Common/db.php';
+require 'Common/csrf.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $current_password = $_POST['current_password'];

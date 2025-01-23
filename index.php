@@ -1,5 +1,5 @@
 <?php
-require 'db.php';
+require 'Common/db.php';
 
 session_start();
 $error = '';

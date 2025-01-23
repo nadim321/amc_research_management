@@ -1,8 +1,8 @@
 <?php
-$host = '127.0.0.1';
+$host = 'localhost';
 $db = 'amc_research_management';
-$user = 'root';
-$pass = '';
+$user = 'root'; // Default username
+$pass = '';     // Default password
 $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
@@ -17,4 +17,19 @@ try {
 } catch (\PDOException $e) {
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
+?>
+
+
+
+<?php
+$host = 'localhost';
+$dbname = 'amc_research_management';
+$username = 'root'; // Default username
+$password = '';     // Default password
+
+$con = mysqli_connect($host, $username, $password, $dbname);
+if (!$con) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
 ?>

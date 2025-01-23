@@ -1,6 +1,6 @@
 <?php
-require '../auth.php';
-require '../db.php';
+require 'Common/auth.php';
+require 'Common/db.php';
 
 // Restrict to Admin and Researchers
 if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 2) {

@@ -1,6 +1,6 @@
 <?php
-require 'auth.php'; // Authentication check
-require 'db.php';
+require 'Common/auth.php'; // Authentication check
+require 'Common/db.php';
 
 // Fetch user profile
 $stmt = $pdo->prepare('SELECT * FROM users WHERE user_id = ?');

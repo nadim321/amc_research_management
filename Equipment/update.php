@@ -1,34 +1,41 @@
 <?php
-require 'auth.php'; // Ensure user is authenticated
-require 'db.php';
+require 'Common/auth.php';
+require 'Common/db.php';
+require 'Common/csrf.php';
 
-if (!isset($_GET['equipment_id']) || $_SESSION['role_id'] != 1) {
-    header('HTTP/1.0 403 Forbidden');
-    exit;
+// Validate role
+if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 3) {
+    die("You do not have permission to access this page.");
 }
 
-$equipment_id = $_GET['equipment_id'];
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
 
-// Fetch equipment details
-$stmt = $pdo->prepare('SELECT * FROM equipment WHERE equipment_id = ?');
-$stmt->execute([$equipment_id]);
-$equipment = $stmt->fetch();
+    // Fetch equipment details
+    $stmt = $pdo->prepare('SELECT * FROM equipment WHERE equipment_id = ?');
+    $stmt->execute([$id]);
+    $equipment = $stmt->fetch();
 
-if (!$equipment) {
-    echo "Equipment not found!";
-    exit;
+    if (!$equipment) {
+        die("Equipment not found.");
+    }
+
+    // Check if user can update
+    if ($_SESSION['role_id'] == 3 && $equipment['added_by'] != $_SESSION['user_id']) {
+        die("You do not have permission to edit this equipment.");
+    }
 }
 
-// Handle form submission
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && validate_csrf_token($_POST['csrf_token'])) {
+    $id = $_POST['id'];
     $name = $_POST['name'];
-    $description = $_POST['description'];
-    $quantity = $_POST['quantity'];
+    $usage_status = $_POST['usage_status'];
+    $availability = $_POST['availability'];
 
-    $stmt = $pdo->prepare('UPDATE equipment SET name = ?, description = ?, quantity = ? WHERE equipment_id = ?');
-    $stmt->execute([$name, $description, $quantity, $equipment_id]);
+    $stmt = $pdo->prepare('UPDATE equipment SET name = ?, usage_status = ?, availability = ? WHERE equipment_id = ?');
+    $stmt->execute([$name, $usage_status, $availability, $id]);
 
-    header('Location: equipment.php');
+    header('Location: equipment_list.php');
     exit;
 }
 ?>
@@ -42,15 +49,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="content-container">
+    <div class="form-container">
         <h1>Update Equipment</h1>
-        <form method="POST">
+        <form method="POST" action="">
+            <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
+            <input type="hidden" name="id" value="<?= $equipment['equipment_id'] ?>">
             <input type="text" name="name" value="<?= htmlspecialchars($equipment['name']) ?>" required>
-            <textarea name="description" required><?= htmlspecialchars($equipment['description']) ?></textarea>
-            <input type="number" name="quantity" value="<?= htmlspecialchars($equipment['quantity']) ?>" required>
-            <button type="submit">Update Equipment</button>
+            <select name="usage_status">
+                <option value="available" <?= $equipment['usage_status'] == 'available' ? 'selected' : '' ?>>Available</option>
+                <option value="in use" <?= $equipment['usage_status'] == 'in use' ? 'selected' : '' ?>>In Use</option>
+                <option value="maintenance" <?= $equipment['usage_status'] == 'maintenance' ? 'selected' : '' ?>>Maintenance</option>
+            </select>
+            <label>
+                <input type="checkbox" name="availability" value="1" <?= $equipment['availability'] ? 'checked' : '' ?>> Available
+            </label>
+            <button type="submit">Update</button>
         </form>
-        <a href="equipment.php">Back to Equipment</a>
     </div>
 </body>
 </html>
