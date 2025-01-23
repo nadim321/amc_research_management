@@ -1,6 +1,7 @@
 <?php
 require 'auth.php'; // Ensures only logged-in users can access
 require 'db.php'; // Database connection
+require 'csrf.php';
 
 // Only allow Admins to create users
 if ($_SESSION['role_id'] != 1) {
@@ -19,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "All fields are required.";
     } else {
         // Hash the password
-        $password = hash('sha256', $password);
+        $password = password_hash($password, PASSWORD_BCRYPT);
 
         // Insert into the database
         $stmt = $pdo->prepare('INSERT INTO users (name, email, password, role_id) VALUES (?, ?, ?, ?)');

@@ -40,8 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h1>Create Project</h1>
         <form method="POST">
             <input type="text" name="title" placeholder="Project Title" required>
-            <textarea name="description" placeholder="Project Description" required></textarea>
-            <label for="team_members">Assign Team Members:</label>
+            <textarea name="description" placeholder="Project Description" required rows="4" cols="50"></textarea><br/>
+            <label for="team_members">Assign Team Members:</label><br/>
             <select name="team_members" required>
                 <?php foreach ($researchers as $researcher): ?>
                     <option value="<?= $researcher['researcher_id'] ?>"><?= htmlspecialchars($researcher['name']) ?></option>

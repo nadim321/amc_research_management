@@ -1,14 +1,16 @@
 <?php
 require '../Common/auth.php';
 require '../Common/db.php';
-echo $_SESSION['role_id'] ;
+require '../Common/csrf.php';
+
 // Restrict to Admin and Researchers
 if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 2) {
     die("You do not have permission to access this page.");
     exit;
 }
 
-$stmt = $pdo->query('SELECT * FROM projects');
+$stmt = $pdo->query('SELECT pr.title , pr.description, rc.name, pr.funding, pr.status FROM projects pr
+        LEFT JOIN researchers rc on rc.researcher_id = pr.team_members');
 $projects = $stmt->fetchAll();
 ?>
 
@@ -36,7 +38,7 @@ $projects = $stmt->fetchAll();
             <tr>
                 <td><?= htmlspecialchars($project['title']) ?></td>
                 <td><?= htmlspecialchars($project['description']) ?></td>
-                <td><?= htmlspecialchars($project['team_members']) ?></td>
+                <td><?= htmlspecialchars($project['name']) ?></td>
                 <td><?= htmlspecialchars($project['funding']) ?></td>
                 <td><?= htmlspecialchars($project['status']) ?></td>
                 <td>

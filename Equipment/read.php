@@ -1,6 +1,7 @@
 <?php
 require '../Common/auth.php';
 require '../Common/db.php';
+require '../Common/csrf.php';
 
 // Fetch equipment based on role
 if ($_SESSION['role_id'] == 1) { // Admin can view all equipment

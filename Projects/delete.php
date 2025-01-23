@@ -1,6 +1,7 @@
 <?php
 require '../Common/auth.php';
 require '../Common/db.php';
+require '../Common/csrf.php';
 
 // Restrict to Admin only
 if ($_SESSION['role_id'] != 1) {
