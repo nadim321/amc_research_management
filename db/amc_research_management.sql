@@ -1,3 +1,21 @@
+-- phpMyAdmin SQL Dump
+-- version 4.5.1
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Jan 23, 2025 at 10:25 AM
+-- Server version: 10.1.10-MariaDB
+-- PHP Version: 5.5.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
 --
 -- Database: `amc_research_management`
 --
@@ -11,44 +29,11 @@
 CREATE TABLE `equipment` (
   `equipment_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `usage_status` enum('available','in use','maintenance') DEFAULT 'available',
-  `availability` tinyint(1) DEFAULT '1',
-  `added_by` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `equipment`
---
-
-INSERT INTO `equipment` (`equipment_id`, `name`, `usage_status`, `availability`, `added_by`) VALUES
-(1, 'ewer', 'in use', 1, 2);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `equipmentusage`
---
-
-CREATE TABLE `equipmentusage` (
-  `usage_id` int(11) NOT NULL,
-  `equipment_id` int(11) NOT NULL,
-  `project_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `usage_start` date NOT NULL,
-  `usage_end` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `projectassignments`
---
-
-CREATE TABLE `projectassignments` (
-  `assignment_id` int(11) NOT NULL,
-  `project_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `role` enum('Researcher','Research Assistant') NOT NULL
+  `usage_status` enum('available','in use','maintenance') NOT NULL DEFAULT 'available',
+  `availability` tinyint(1) NOT NULL DEFAULT '1',
+  `added_by` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -67,24 +52,13 @@ CREATE TABLE `projects` (
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `project_members`
+-- Dumping data for table `projects`
 --
 
-CREATE TABLE `project_members` (
-  `id` int(11) NOT NULL,
-  `project_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `project_members`
---
-
-INSERT INTO `project_members` (`id`, `project_id`, `user_id`) VALUES
-(1, 6, 4);
+INSERT INTO `projects` (`project_id`, `title`, `description`, `team_members`, `funding`, `status`, `created_at`) VALUES
+(3, 'sdfsd', 'sdf', '2', '100.00', 'ongoing', '2025-01-23 09:09:01'),
+(4, 'fghf', 'fgh', '1', '33.00', 'ongoing', '2025-01-23 09:25:04');
 
 -- --------------------------------------------------------
 
@@ -94,10 +68,11 @@ INSERT INTO `project_members` (`id`, `project_id`, `user_id`) VALUES
 
 CREATE TABLE `reports` (
   `report_id` int(11) NOT NULL,
-  `report_type` enum('research_progress','project_funding','equipment_usage') NOT NULL,
-  `content` text NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text,
   `created_by` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -120,10 +95,10 @@ CREATE TABLE `researchers` (
 --
 
 INSERT INTO `researchers` (`researcher_id`, `name`, `contact_info`, `expertise`, `assigned_projects`, `created_at`) VALUES
-(1, 'erwe', 'werw', 'wer', NULL, '2025-01-22 16:16:48'),
-(2, 'dsf', 'sdf', 'ds', NULL, '2025-01-22 16:17:48'),
-(3, 'dfs', 'sdf', 'ds', NULL, '2025-01-22 16:18:01'),
-(4, 'fgdf', 'dfg', 'dfg', NULL, '2025-01-22 16:18:12');
+(1, 'erwe', 'werw', 'wer', NULL, '2025-01-22 10:16:48'),
+(2, 'dsf', 'sdf', 'ds', NULL, '2025-01-22 10:17:48'),
+(3, 'dfs', 'sdf', 'ds', NULL, '2025-01-22 10:18:01'),
+(4, 'fgdf', 'dfg', 'dfg', NULL, '2025-01-22 10:18:12');
 
 -- --------------------------------------------------------
 
@@ -180,28 +155,10 @@ ALTER TABLE `equipment`
   ADD PRIMARY KEY (`equipment_id`);
 
 --
--- Indexes for table `equipmentusage`
---
-ALTER TABLE `equipmentusage`
-  ADD PRIMARY KEY (`usage_id`);
-
---
--- Indexes for table `projectassignments`
---
-ALTER TABLE `projectassignments`
-  ADD PRIMARY KEY (`assignment_id`);
-
---
 -- Indexes for table `projects`
 --
 ALTER TABLE `projects`
   ADD PRIMARY KEY (`project_id`);
-
---
--- Indexes for table `project_members`
---
-ALTER TABLE `project_members`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `reports`
@@ -237,27 +194,12 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `equipment`
 --
 ALTER TABLE `equipment`
-  MODIFY `equipment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `equipmentusage`
---
-ALTER TABLE `equipmentusage`
-  MODIFY `usage_id` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `projectassignments`
---
-ALTER TABLE `projectassignments`
-  MODIFY `assignment_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `equipment_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `projects`
 --
 ALTER TABLE `projects`
-  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `project_members`
---
-ALTER TABLE `project_members`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `reports`
 --
@@ -278,3 +220,6 @@ ALTER TABLE `roles`
 --
 ALTER TABLE `users`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

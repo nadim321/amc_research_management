@@ -63,8 +63,9 @@ $user = $stmt->fetch();
                         <li><a href="../Researchers/read.php">View Researchers</a></li>
                     </ul>
                 </div>
-
-               <a href="../logout.php">Logout</a>
+                
+                <a href="../change_password.php">Change Password</a><br/>
+                <a href="../logout.php">Logout</a>
 
             </div>
         </nav>
