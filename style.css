@@ -83,6 +83,16 @@ body {
     text-align: center;
 }
 
+
+.menu-container {
+    background: white;
+    border-radius: 12px;
+    padding: 30px 25px;
+    width: 100%;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    text-align: center;
+}
+
 /* Footer */
 footer {
     margin-top: 20px;

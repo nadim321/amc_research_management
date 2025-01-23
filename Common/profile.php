@@ -1,6 +1,6 @@
 <?php
-require 'Common/auth.php'; // Authentication check
-require 'Common/db.php';
+require 'auth.php'; // Authentication check
+require 'db.php';
 
 // Fetch user profile
 $stmt = $pdo->prepare('SELECT * FROM users WHERE user_id = ?');
@@ -19,7 +19,7 @@ $projects = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <div class="form-container">

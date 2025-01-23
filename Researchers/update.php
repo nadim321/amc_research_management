@@ -1,8 +1,8 @@
 
 <?php
-require 'Common/auth.php';
-require 'Common/db.php';
-require 'Common/csrf.php';
+require '../Common/auth.php';
+require '../Common/db.php';
+require '../Common/csrf.php';
 
 // Restrict to Admin and Researchers
 if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 2) {

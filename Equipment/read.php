@@ -1,6 +1,6 @@
 <?php
-require 'Common/auth.php';
-require 'Common/db.php';
+require '../Common/auth.php';
+require '../Common/db.php';
 
 // Fetch equipment based on role
 if ($_SESSION['role_id'] == 1) { // Admin can view all equipment
@@ -20,7 +20,7 @@ $equipment = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Equipment List</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <div class="table-container">

@@ -1,7 +1,7 @@
 <?php
-require 'Common/auth.php';
-require 'Common/db.php';
-require 'Common/csrf.php';
+require '../Common/auth.php';
+require '../Common/db.php';
+require '../Common/csrf.php';
 
 // Check if user has permission (Admin or Researcher)
 if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 2) {
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Create Report</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <div class="container">

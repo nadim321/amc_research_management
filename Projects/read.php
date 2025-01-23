@@ -1,6 +1,6 @@
 <?php
-require 'Common/auth.php';
-require 'Common/db.php';
+require '../Common/auth.php';
+require '../Common/db.php';
 
 // Restrict to Admin and Researchers
 if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 2) {
@@ -18,7 +18,7 @@ $projects = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <div class="form-container">

@@ -1,7 +1,7 @@
 <?php
-require 'Common/auth.php';
-require 'Common/db.php';
-require 'Common/csrf.php';
+require '../Common/auth.php';
+require '../Common/db.php';
+require '../Common/csrf.php';
 
 // Validate role
 if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 3) {
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && validate_csrf_token($_POST['csrf_tok
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Equipment</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <div class="form-container">

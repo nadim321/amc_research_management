@@ -1,7 +1,7 @@
 <?php
-require 'Common/auth.php';
-require 'Common/db.php';
-require 'Common/csrf.php';
+require '../Common/auth.php';
+require '../Common/db.php';
+require '../Common/csrf.php';
 
 // Check if user has permission (Admin only)
 if ($_SESSION['role_id'] != 1) {

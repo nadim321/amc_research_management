@@ -1,6 +1,6 @@
 <?php
-require 'Common/auth.php'; // Ensures only logged-in users can access
-require 'Common/db.php'; // Database connection
+require 'auth.php'; // Ensures only logged-in users can access
+require 'db.php'; // Database connection
 
 // Only allow Admins to create users
 if ($_SESSION['role_id'] != 1) {
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create User</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
     <div class="login-container">
