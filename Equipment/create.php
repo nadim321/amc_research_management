@@ -1,7 +1,7 @@
 <?php
-require 'Common/auth.php';
-require 'Common/db.php';
-require 'Common/csrf.php';
+require '../Common/auth.php';
+require '../Common/db.php';
+require '../Common/csrf.php';
 
 // Check if the user is Admin or Research Assistant
 if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 3) {
@@ -34,7 +34,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && validate_csrf_token($_POST['csrf_tok
     <div class="form-container">
         <h1>Create Equipment</h1>
         <form method="POST" action="">
-            <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
             <input type="text" name="name" placeholder="Equipment Name" required>
             <select name="usage_status">
                 <option value="available">Available</option>

@@ -52,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && validate_csrf_token($_POST['csrf_tok
     <div class="form-container">
         <h1>Update Equipment</h1>
         <form method="POST" action="">
-            <input type="hidden" name="csrf_token" value="<?= generate_csrf_token() ?>">
             <input type="hidden" name="id" value="<?= $equipment['equipment_id'] ?>">
             <input type="text" name="name" value="<?= htmlspecialchars($equipment['name']) ?>" required>
             <select name="usage_status">

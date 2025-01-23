@@ -1,6 +1,5 @@
 <?php
 require 'Common/db.php';
-require 'Common/csrf.php';
 
 session_start();
 $error = '';
