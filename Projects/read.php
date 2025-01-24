@@ -49,7 +49,7 @@ $projects = $stmt->fetchAll();
                 </td>
             </tr>
             <?php endforeach; ?>
-        </table>
+        </table></br>
         <a href="create.php">Add New Project</a>
         <a href="../Common/dashboard.php">Back to Dashboard</a>
     </div>

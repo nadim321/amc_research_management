@@ -48,7 +48,7 @@ $equipment = $stmt->fetchAll();
                 </td>
             </tr>
             <?php endforeach; ?>
-        </table>
+        </table></br>
         <a href="create.php">Add New Equipment</a> 
         <a href="../Common/dashboard.php">Back to Dashboard</a>
     </div>
