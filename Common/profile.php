@@ -1,7 +1,7 @@
 <?php
 require 'auth.php'; // Authentication check
 require 'db.php';
-require '../csrf.php';
+require 'csrf.php';
 
 // Fetch user profile
 $stmt = $pdo->prepare('SELECT * FROM users WHERE user_id = ?');
@@ -20,7 +20,7 @@ $projects = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../profileStyle.css">
 </head>
 <body>
     <div class="form-container">
@@ -34,6 +34,8 @@ $projects = $stmt->fetchAll();
             <li><?= htmlspecialchars($project['title']) ?></li>
             <?php endforeach; ?>
         </ul>
+        <a href="dashboard.php">Back to Dashboard</a>
     </div>
+    
 </body>
 </html>

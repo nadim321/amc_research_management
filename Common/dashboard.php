@@ -1,3 +1,18 @@
+<?php
+require 'auth.php'; // Ensures user is authenticated
+require 'db.php';
+
+$user_role = $_SESSION['role_id'];
+$user_name = $_SESSION['user_id'];
+
+// Fetch the user's name
+$stmt = $pdo->prepare('SELECT name FROM users WHERE user_id = ?');
+$stmt->execute([$user_name]);
+$user = $stmt->fetch();
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +23,11 @@
 </head>
 <body>
     <div class="container">
-        <h1>Welcome, Researcher</h1>
-        <p class="role">Your role: <strong>Researcher</strong></p>
+        <h1>Welcome, <?= htmlspecialchars($user['name']) ?></h1>
+        <p class="role">Your role: 
+            <?= ($user_role == 1) ? 'Admin' : (($user_role == 2) ? 'Researcher' : 'Research Assistant') ?>
+        </p>
+        <a href="profile.php" class="btn">My Profile</a>
 
         <div class="card">
             <h3>Projects</h2>
@@ -39,7 +57,7 @@
             <h3>Researchers</h2>
             <ul>
                 <li><a href="../Researchers/create.php">Add Researcher</a></li>
-                <li><a href="../Researchers/create.php">View Researchers</a></li>
+                <li><a href="../Researchers/read.php">View Researchers</a></li>
             </ul>
         </div>
 

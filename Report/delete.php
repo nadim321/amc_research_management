@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
     $stmt = $pdo->prepare("DELETE FROM reports WHERE report_id = ?");
     $stmt->execute([$_GET['id']]);
 
-    echo "Report deleted successfully.";
     header('Location: read.php');
+    exit;
 }
 ?>

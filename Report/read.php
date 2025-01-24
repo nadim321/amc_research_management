@@ -19,7 +19,7 @@ $reports = $stmt->fetchAll();
 <head>
     <meta charset="UTF-8">
     <title>View Reports</title>
-    <link rel="stylesheet" href="../style.css">  
+    <link rel="stylesheet" href="../readStyle.css">  
 </head>
 <body>
     <div class="container">
@@ -40,13 +40,15 @@ $reports = $stmt->fetchAll();
                 <td><?= htmlspecialchars($report['created_at']) ?></td>
                 <td>
                     <?php if ($_SESSION['role_id'] == 1): ?>
-                    <a href="delete_report.php?id=<?= $report['report_id'] ?>">Delete</a>
+                    <a href="delete.php?id=<?= $report['report_id'] ?>">Delete</a>
                     <?php endif; ?>
-                    <a href="update_report.php?id=<?= $report['report_id'] ?>">Edit</a>
+                    <a href="update.php?id=<?= $report['report_id'] ?>">Edit</a>
                 </td>
             </tr>
             <?php endforeach; ?>
         </table>
+        <a href="create.php">Add New Report</a>
+        <a href="../Common/dashboard.php">Back to Dashboard</a>
     </div>
 </body>
 </html>

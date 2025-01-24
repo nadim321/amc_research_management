@@ -21,7 +21,7 @@ $equipment = $stmt->fetchAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Equipment List</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../readStyle.css">
 </head>
 <body>
     <div class="table-container">
@@ -41,14 +41,16 @@ $equipment = $stmt->fetchAll();
                 <td><?= $item['availability'] ? 'Yes' : 'No' ?></td>
                 <td><?= htmlspecialchars($item['added_by']) ?></td>
                 <td>
-                    <a href="update_equipment.php?id=<?= $item['equipment_id'] ?>">Edit</a>
+                    <a href="update.php?id=<?= $item['equipment_id'] ?>">Edit</a>
                     <?php if ($_SESSION['role_id'] == 1): ?>
-                    <a href="delete_equipment.php?id=<?= $item['equipment_id'] ?>">Delete</a>
+                    <a href="delete.php?id=<?= $item['equipment_id'] ?>">Delete</a>
                     <?php endif; ?>
                 </td>
             </tr>
             <?php endforeach; ?>
         </table>
+        <a href="create.php">Add New Equipment</a> 
+        <a href="../Common/dashboard.php">Back to Dashboard</a>
     </div>
 </body>
 </html>

@@ -26,7 +26,7 @@ if (isset($_GET['id'])) {
     }
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && validate_csrf_token($_POST['csrf_token'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $_POST['id'];
     $name = $_POST['name'];
     $usage_status = $_POST['usage_status'];
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && validate_csrf_token($_POST['csrf_tok
     $stmt = $pdo->prepare('UPDATE equipment SET name = ?, usage_status = ?, availability = ? WHERE equipment_id = ?');
     $stmt->execute([$name, $usage_status, $availability, $id]);
 
-    header('Location: equipment_list.php');
+    header('Location: read.php');
     exit;
 }
 ?>

@@ -19,8 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $team_members = $_POST['team_members']; // Convert array to comma-separated string
     $funding = $_POST['funding'];
 
-    $stmt = $pdo->prepare('INSERT INTO projects (title, description, team_members, funding) VALUES (?, ?, ?, ?)');
-    $stmt->execute([$title, $description, $team_members, $funding]);
+    $stmt = $pdo->prepare('INSERT INTO projects (title, description, team_members, funding , created_by) VALUES (?, ?, ?, ?, ?)');
+    $stmt->execute([$title, $description, $team_members, $funding , $_SESSION['user_id']]);
 
     header('Location: read.php');
     exit;
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Project</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../createStyle.css">
 </head>
 <body>
     <div class="form-container">
@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="number" step="0.01" name="funding" placeholder="Funding Amount" required>
             <button type="submit">Create Project</button>
         </form>
+        <a href="../Common/dashboard.php">Back to Dashboard</a>
     </div>
 </body>
 </html>

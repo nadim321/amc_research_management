@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Change Password</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="createStyle.css">
 </head>
 <body>
     <div class="form-container">
@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="password" name="new_password" placeholder="New Password" required>
             <button type="submit">Change Password</button>
         </form>
+        <a href="Common/dashboard.php">Back to Dashboard</a>
     </div>
 </body>
 </html>

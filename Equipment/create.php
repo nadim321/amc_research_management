@@ -8,7 +8,7 @@ if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 3) {
     die("You do not have permission to access this page.");
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && validate_csrf_token($_POST['csrf_token'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $usage_status = $_POST['usage_status'];
     $availability = $_POST['availability'];
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && validate_csrf_token($_POST['csrf_tok
     $stmt = $pdo->prepare('INSERT INTO equipment (name, usage_status, availability, added_by) VALUES (?, ?, ?, ?)');
     $stmt->execute([$name, $usage_status, $availability, $added_by]);
 
-    header('Location: equipment_list.php');
+    header('Location: read.php');
     exit;
 }
 ?>
@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && validate_csrf_token($_POST['csrf_tok
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Equipment</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../createStyle.css">
 </head>
 <body>
     <div class="form-container">
@@ -45,6 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && validate_csrf_token($_POST['csrf_tok
             </label>
             <button type="submit">Add Equipment</button>
         </form>
+        <a href="../Common/dashboard.php">Back to Dashboard</a>
     </div>
 </body>
 </html>

@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Researcher</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../createStyle.css">
 </head>
 <body>
     <div class="form-container">
@@ -41,6 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" name="assigned_projects" placeholder="Assigned Projects (comma-separated IDs)">
             <button type="submit">Create Researcher</button>
         </form>
+        <a href="../Common/dashboard.php">Back to Dashboard</a>
     </div>
 </body>
 </html>

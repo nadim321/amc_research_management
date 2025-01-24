@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
     $stmt = $pdo->prepare('DELETE FROM equipment WHERE equipment_id = ?');
     $stmt->execute([$id]);
 
-    header('Location: equipment_list.php');
+    header('Location: read.php');
     exit;
 }
 ?>
