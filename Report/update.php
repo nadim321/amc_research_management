@@ -11,6 +11,7 @@ if ($_SESSION['role_id'] != 1) {
 
 // Fetch the report to edit
 if (isset($_GET['id'])) {
+    $id = $_GET['id'];
     $stmt = $pdo->prepare("SELECT * FROM reports WHERE report_id = ?");
     $stmt->execute([$_GET['id']]);
     $report = $stmt->fetch();
@@ -26,8 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $description = $_POST['description'];
 
-    $stmt = $pdo->prepare("UPDATE reports SET title = ?, description = ? WHERE report_id = ?");
-    $stmt->execute([$title, $description, $_GET['id']]);
+    $stmt = $pdo->prepare('UPDATE reports SET title = :title, description = :description WHERE report_id = :report_id');
+        
+    // Bind values securely to the query
+    $stmt->execute([
+        ':title' => $title,
+        ':description' => $description,
+        ':report_id' => $id,
+    ]);
 
     header('Location: read.php');
     exit;
@@ -39,14 +46,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Update Report</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../createStyle.css">
 </head>
 <body>
     <div class="container">
         <h1>Update Report</h1>
         <form method="POST">
-            <input type="text" name="title" value="<?= htmlspecialchars($report['title']) ?>" required>
-            <textarea name="description" required><?= htmlspecialchars($report['description']) ?></textarea>
+            <input type="text" name="title" value="<?= htmlspecialchars($report['title']) ?>" maxlength="90" required>
+            <textarea name="description" maxlength="300" required><?= htmlspecialchars($report['description']) ?></textarea>
             <button type="submit">Update Report</button>
         </form>
     </div>

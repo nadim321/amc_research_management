@@ -15,8 +15,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = $_POST['description'];
     $created_by = $_SESSION['user_id'];
 
-    $stmt = $pdo->prepare("INSERT INTO reports (title, description, created_by) VALUES (?, ?, ?)");
-    $stmt->execute([$title, $description, $created_by]);
+    $stmt = $pdo->prepare("INSERT INTO reports (title, description, created_by) VALUES (:title, :description, :created_by)");
+    $stmt->execute([
+        ':title' => $title,
+        ':description' => $description,
+        ':created_by' => $created_by
+    ]);
 
     header('Location: read.php');
     exit;
@@ -34,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="form-container">
         <h1>Create Report</h1>
         <form method="POST">
-            <input type="text" name="title" placeholder="Report Title" required>
-            <textarea name="description" placeholder="Report Description" required></textarea>
+            <input type="text" name="title" placeholder="Report Title" maxlength="90" required>
+            <textarea name="description" placeholder="Report Description" maxlength="300" required></textarea>
             <button type="submit">Generate Report</button>
         </form>
         <a href="../Common/dashboard.php">Back to Dashboard</a>

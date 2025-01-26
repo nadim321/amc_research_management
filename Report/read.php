@@ -22,7 +22,7 @@ $reports = $stmt->fetchAll();
     <link rel="stylesheet" href="../readStyle.css">  
 </head>
 <body>
-    <div class="container">
+    <div class="form-container">
         <h1>Reports</h1>
         <table>
             <tr>

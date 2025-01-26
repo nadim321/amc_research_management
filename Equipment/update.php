@@ -12,8 +12,10 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     // Fetch equipment details
-    $stmt = $pdo->prepare('SELECT * FROM equipment WHERE equipment_id = ?');
-    $stmt->execute([$id]);
+    $stmt = $pdo->prepare('SELECT * FROM equipment WHERE added_by = :user_id');
+        
+    // Execute the statement with the sanitized session user_id
+    $stmt->execute([':user_id' => $_SESSION['user_id']]);
     $equipment = $stmt->fetch();
 
     if (!$equipment) {
@@ -46,14 +48,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Equipment</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../createStyle.css">
 </head>
 <body>
     <div class="form-container">
         <h1>Update Equipment</h1>
         <form method="POST" action="">
             <input type="hidden" name="id" value="<?= $equipment['equipment_id'] ?>">
-            <input type="text" name="name" value="<?= htmlspecialchars($equipment['name']) ?>" required>
+            <input type="text" name="name" value="<?= htmlspecialchars($equipment['name']) ?>" maxlength="90" required>
             <select name="usage_status">
                 <option value="available" <?= $equipment['usage_status'] == 'available' ? 'selected' : '' ?>>Available</option>
                 <option value="in use" <?= $equipment['usage_status'] == 'in use' ? 'selected' : '' ?>>In Use</option>

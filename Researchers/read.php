@@ -1,4 +1,3 @@
-
 <?php
 require '../Common/auth.php';
 require '../Common/db.php';
@@ -10,8 +9,18 @@ if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 2) {
     exit;
 }
 
+// Encryption settings (must match those used in create.php)
+$encryption_key = 'mySecretKey'; // This should match the key you used for encryption
+
+// Decryption function (same as in create.php)
+function decrypt_data($data, $encryption_key, $iv) {
+    return openssl_decrypt($data, 'aes-256-cbc', $encryption_key, 0, $iv);
+}
+
+// Fetch all researchers from the database
 $stmt = $pdo->query('SELECT * FROM researchers');
 $researchers = $stmt->fetchAll();
+
 ?>
 
 <!DOCTYPE html>
@@ -33,21 +42,38 @@ $researchers = $stmt->fetchAll();
                 <th>Assigned Projects</th>
                 <th>Actions</th>
             </tr>
-            <?php foreach ($researchers as $researcher): ?>
+            <?php foreach ($researchers as $researcher):               
+                ?>
+            <?php
+                // Decrypt the sensitive fields
+                $iv = "mySecretKey12345";// Decode the stored IV (base64 encoded)
+
+                $decrypted_name = decrypt_data($researcher['name'], $encryption_key, $iv);
+                $decrypted_contact_info = decrypt_data($researcher['contact_info'], $encryption_key, $iv);
+                $decrypted_expertise = decrypt_data($researcher['expertise'], $encryption_key, $iv);
+                $decrypted_assigned_projects = $researcher['assigned_projects'];
+                                
+                $stmt2 = $pdo->query("Select * from projects where project_id in ($decrypted_assigned_projects)");
+                $projects = $stmt2->fetchAll();
+                $projectTitle = "";
+                foreach ($projects as $project){
+                    $projectTitle = $projectTitle . decrypt_data($project['title'], $encryption_key, $iv) .", ";
+                }
+           ?>
             <tr>
-                <td><?= htmlspecialchars($researcher['name']) ?></td>
-                <td><?= htmlspecialchars($researcher['contact_info']) ?></td>
-                <td><?= htmlspecialchars($researcher['expertise']) ?></td>
-                <td><?= htmlspecialchars($researcher['assigned_projects']) ?></td>
+                <td><?= htmlspecialchars($decrypted_name, ENT_QUOTES, 'UTF-8') ?></td>
+                <td><?= htmlspecialchars($decrypted_contact_info, ENT_QUOTES, 'UTF-8') ?></td>
+                <td><?= htmlspecialchars($decrypted_expertise, ENT_QUOTES, 'UTF-8') ?></td>
+                <td><?= htmlspecialchars($projectTitle, ENT_QUOTES, 'UTF-8') ?></td>
                 <td>
                     <a href="update.php?id=<?= $researcher['researcher_id'] ?>">Edit</a>
                     <?php if ($_SESSION['role_id'] == 1): ?>
-                    <a href="delete.php?id=<?= $researcher['researcher_id'] ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                    <a href="delete.php?id=<?= $researcher['researcher_id'] ?>">Delete</a>
                     <?php endif; ?>
                 </td>
             </tr>
             <?php endforeach; ?>
-        </table></br>
+        </table><br>
         <a href="create.php">Add New Researcher</a>
         <a href="../Common/dashboard.php">Back to Dashboard</a>
     </div>

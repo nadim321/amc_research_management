@@ -9,9 +9,32 @@ if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 2) {
     exit;
 }
 
-$stmt = $pdo->query('SELECT pr.title , pr.description, rc.name, pr.funding, pr.status FROM projects pr
-        LEFT JOIN researchers rc on rc.researcher_id = pr.team_members');
+// Encryption settings
+$encryption_key = 'mySecretKey'; // This should match the key you used for encryption
+
+// Decryption function
+function decrypt_data($data, $encryption_key, $iv) {
+    return openssl_decrypt($data, 'aes-256-cbc', $encryption_key, 0, $iv);
+}
+
+// Fetch all projects, including the IV used for encryption
+$stmt = $pdo->query('SELECT pr.project_id, pr.title, pr.description,  rc.name, pr.team_members, pr.funding, pr.status, pr.iv 
+                     FROM projects pr
+                     LEFT JOIN researchers rc on rc.researcher_id = pr.team_members');
 $projects = $stmt->fetchAll();
+$iv = "mySecretKey12345";
+// Decrypt the project data
+foreach ($projects as &$project) {
+    // Decode the base64 encoded IV
+
+    
+    // Decrypt the fields
+    $project['title'] = decrypt_data($project['title'], $encryption_key, $iv);
+    $project['description'] = decrypt_data($project['description'], $encryption_key, $iv);
+    $project['team_members'] = decrypt_data($project['name'], $encryption_key, $iv);
+
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -34,18 +57,19 @@ $projects = $stmt->fetchAll();
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
-            <?php foreach ($projects as $project): ?>
+            <?php foreach ($projects as &$project): ?>
+                
             <tr>
                 <td><?= htmlspecialchars($project['title']) ?></td>
                 <td><?= htmlspecialchars($project['description']) ?></td>
-                <td><?= htmlspecialchars($project['name']) ?></td>
+                <td><?= htmlspecialchars($project['team_members']) ?></td>
                 <td><?= htmlspecialchars($project['funding']) ?></td>
                 <td><?= htmlspecialchars($project['status']) ?></td>
                 <td>
-                    <a href="update.php?id=<?= $project['project_id'] ?>">Edit</a>
                     <?php if ($_SESSION['role_id'] == 1): ?>
-                    <a href="delete.php?id=<?= $project['project_id'] ?>" onclick="return confirm('Are you sure?')">Delete</a>
+                    <a href="delete.php?id=<?php echo $project['project_id'] ?>">Delete</a>
                     <?php endif; ?>
+                    <a href="update.php?id=<?php echo $project['project_id'] ?>">Edit</a>
                 </td>
             </tr>
             <?php endforeach; ?>

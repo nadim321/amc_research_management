@@ -10,8 +10,12 @@ if ($_SESSION['role_id'] != 1) {
 }
 
 $id = $_GET['id'];
-$stmt = $pdo->prepare('DELETE FROM researchers WHERE researcher_id = ?');
-$stmt->execute([$id]);
+$stmt = $pdo->prepare('DELETE FROM researchers WHERE researcher_id = :researcher_id');
+        
+// Bind values securely to the query
+$stmt->execute([
+    ':researcher_id' => $id
+]);
 
 header('Location: read.php');
 exit;

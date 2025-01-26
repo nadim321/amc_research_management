@@ -11,8 +11,10 @@ if ($_SESSION['role_id'] != 1) {
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    $stmt = $pdo->prepare('DELETE FROM equipment WHERE equipment_id = ?');
-    $stmt->execute([$id]);
+    $stmt = $pdo->prepare('DELETE FROM equipment WHERE equipment_id = :id');
+        
+    // Execute the statement with the sanitized ID
+    $stmt->execute([':id' => $id]);
 
     header('Location: read.php');
     exit;

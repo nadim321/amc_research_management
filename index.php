@@ -7,14 +7,22 @@ $error = '';
 
 // Handle login form submission
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email =  $_POST['email'];
+    $password =  $_POST['password'];
 
-    $stmt = $pdo->prepare('SELECT * FROM users WHERE email = ?');
-    $stmt->execute([$email]);
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE email = :email');
+    $stmt->bindParam(':email', $email); // Bind user input securely
+    $stmt->execute();
     $user = $stmt->fetch();
 
     if ($user && password_verify($password, $user['password'])) {
+
+        if (!$user['is_password_set']) {
+            // Redirect to "Forgot Password" page
+            header("Location: forget_password.php?email=$email");
+            exit();
+        }
+
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['role_id'] = $user['role_id'];
         header('Location: Common/dashboard.php');
@@ -45,8 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Login</button>
         </form>
-
-        <a href="register.php">Don't have an account? Register</a>
     </div>
 </body>
 </html>

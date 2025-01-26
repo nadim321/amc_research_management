@@ -30,6 +30,14 @@ $user = $stmt->fetch();
         <a href="profile.php" class="btn">My Profile</a>
 
         <div class="card">
+            <h3>Researchers</h2>
+            <ul>
+                <li><a href="../Researchers/create.php">Add Researcher</a></li>
+                <li><a href="../Researchers/read.php">View Researchers</a></li>
+            </ul>
+        </div>
+		
+        <div class="card">
             <h3>Projects</h2>
             <ul>
                 <li><a href="../Projects/create.php">Create Project</a></li>
@@ -50,14 +58,6 @@ $user = $stmt->fetch();
             <ul>
                 <li><a href="../Report/create.php">Generate Report</a></li>
                 <li><a href="../Report/read.php">View Reports</a></li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h3>Researchers</h2>
-            <ul>
-                <li><a href="../Researchers/create.php">Add Researcher</a></li>
-                <li><a href="../Researchers/read.php">View Researchers</a></li>
             </ul>
         </div>
 

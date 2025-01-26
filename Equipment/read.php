@@ -7,8 +7,10 @@ require '../Common/csrf.php';
 if ($_SESSION['role_id'] == 1) { // Admin can view all equipment
     $stmt = $pdo->query('SELECT * FROM equipment');
 } elseif ($_SESSION['role_id'] == 3) { // Research Assistant can view their own equipment
-    $stmt = $pdo->prepare('SELECT * FROM equipment WHERE added_by = ?');
-    $stmt->execute([$_SESSION['user_id']]);
+    $stmt = $pdo->prepare('SELECT * FROM equipment WHERE added_by = :user_id');
+        
+    // Execute the statement with the sanitized session user_id
+    $stmt->execute([':user_id' => $_SESSION['user_id']]);
 } else {
     die("You do not have permission to view this page.");
 }
