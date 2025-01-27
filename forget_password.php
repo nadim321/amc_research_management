@@ -83,10 +83,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <input type="email" name="email" placeholder="Enter your email" required>
     <button type="submit">Send Password Setup Link</button>
 </form>
-
-<?php 
-    if(isset($resetLink)){ ?>
-    <div class="login-container">
-    <a href="<?php echo $resetLink ; ?>"> <?php echo $resetLink ; ?></a>
-    </div>
-<?php } ?> 

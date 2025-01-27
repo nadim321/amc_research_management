@@ -11,6 +11,7 @@ if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 2) {
 
 // Encryption settings (must match those used in create.php)
 $encryption_key = 'mySecretKey'; // This should match the key you used for encryption
+$iv_length = openssl_cipher_iv_length('aes-256-cbc'); // AES encryption with CBC mode
 
 // Decryption function (same as in create.php)
 function decrypt_data($data, $encryption_key, $iv) {
@@ -46,7 +47,7 @@ $researchers = $stmt->fetchAll();
                 ?>
             <?php
                 // Decrypt the sensitive fields
-                $iv = "mySecretKey12345";// Decode the stored IV (base64 encoded)
+                $iv = base64_decode($researcher['iv']);
 
                 $decrypted_name = decrypt_data($researcher['name'], $encryption_key, $iv);
                 $decrypted_contact_info = decrypt_data($researcher['contact_info'], $encryption_key, $iv);
@@ -57,7 +58,8 @@ $researchers = $stmt->fetchAll();
                 $projects = $stmt2->fetchAll();
                 $projectTitle = "";
                 foreach ($projects as $project){
-                    $projectTitle = $projectTitle . decrypt_data($project['title'], $encryption_key, $iv) .", ";
+                    $pIv = base64_decode($project['iv']);
+                    $projectTitle = $projectTitle . decrypt_data($project['title'], $encryption_key, $pIv) .", ";
                 }
            ?>
             <tr>

@@ -7,25 +7,30 @@ require '../Common/csrf.php';
 if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 3) {
     die("You do not have permission to access this page.");
 }
-
+$error = '';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $name = $_POST['name'];
     $usage_status = $_POST['usage_status'];
     $availability = $_POST['availability'];
     $added_by = $_SESSION['user_id'];
 
-    $stmt = $pdo->prepare('INSERT INTO equipment (name, usage_status, availability, added_by) 
-                               VALUES (:name, :usage_status, :availability, :added_by)');
-        // Execute the statement with the sanitized data
-        $stmt->execute([
-            ':name' => $name,
-            ':usage_status' => $usage_status,
-            ':availability' => $availability,
-            ':added_by' => $added_by
-        ]);
+    
+    if (strlen($name) > 90) {
+        $error = 'Title cannot exceed 90 characters.';
+    }else{
+        $stmt = $pdo->prepare('INSERT INTO equipment (name, usage_status, availability, added_by) 
+                                VALUES (:name, :usage_status, :availability, :added_by)');
+            // Execute the statement with the sanitized data
+            $stmt->execute([
+                ':name' => $name,
+                ':usage_status' => $usage_status,
+                ':availability' => $availability,
+                ':added_by' => $added_by
+            ]);
 
-    header('Location: read.php');
-    exit;
+        header('Location: read.php');
+        exit;
+    }
 }
 ?>
 
@@ -40,8 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <div class="form-container">
         <h1>Create Equipment</h1>
+        <?php if ($error): ?>
+        <p style="color: red;"><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
         <form method="POST" action="">
-            <input type="text" name="name" placeholder="Equipment Name" maxlength="90" required>
+            <input type="text" name="name" placeholder="Equipment Name"  required>
             <select name="usage_status">
                 <option value="available">Available</option>
                 <option value="in use">In Use</option>

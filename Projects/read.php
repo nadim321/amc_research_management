@@ -11,6 +11,7 @@ if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 2) {
 
 // Encryption settings
 $encryption_key = 'mySecretKey'; // This should match the key you used for encryption
+$iv_length = openssl_cipher_iv_length('aes-256-cbc'); // AES encryption with CBC mode
 
 // Decryption function
 function decrypt_data($data, $encryption_key, $iv) {
@@ -22,11 +23,11 @@ $stmt = $pdo->query('SELECT pr.project_id, pr.title, pr.description,  rc.name, p
                      FROM projects pr
                      LEFT JOIN researchers rc on rc.researcher_id = pr.team_members');
 $projects = $stmt->fetchAll();
-$iv = "mySecretKey12345";
+$iv_length = openssl_cipher_iv_length('aes-256-cbc'); // AES encryption with CBC mode
 // Decrypt the project data
 foreach ($projects as &$project) {
     // Decode the base64 encoded IV
-
+    $iv = base64_decode($project['iv']);
     
     // Decrypt the fields
     $project['title'] = decrypt_data($project['title'], $encryption_key, $iv);

@@ -1,7 +1,8 @@
-
 --
 -- Database: `amc_research_management`
 --
+
+CREATE DATABASE if not exists amc_research_management;
 
 -- --------------------------------------------------------
 
@@ -51,6 +52,11 @@ CREATE TABLE `projects` (
   `created_by` int(11) NOT NULL,
   `iv` varchar(255) NOT NULL
 ) ;
+
+
+
+INSERT INTO `projects` (`project_id`, `title`, `description`, `team_members`, `funding`, `status`, `created_at`, `created_by`, `iv`) VALUES
+(1, 'vtDCLuiMwOrOh2RBcUHFMA==', 'vtDCLuiMwOrOh2RBcUHFMA==', NULL, '100.00', 'ongoing', '2025-01-26 09:39:18', 2, 'bXlTZWNyZXRLZXkxMjM0NQ==');
 
 
 -- --------------------------------------------------------

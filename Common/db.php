@@ -19,17 +19,3 @@ try {
 }
 ?>
 
-
-
-<?php
-$host = 'localhost';
-$dbname = 'amc_research_management';
-$username = 'root'; // Default username
-$password = '';     // Default password
-
-$con = mysqli_connect($host, $username, $password, $dbname);
-if (!$con) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
-?>

@@ -70,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p style="color: red;"><?= htmlspecialchars($error) ?></p>
         <?php endif; ?>
         <form method="POST">
-            <input type="text" name="name" placeholder="Full Name" maxlength="90" required>
+            <input type="text" name="name" placeholder="Full Name"  required>
             <input type="email" name="email" placeholder="Email Address" required>
             <input type="password" name="password" placeholder="Password" required>
             <select name="role_id" required>

@@ -21,23 +21,30 @@ if (isset($_GET['id'])) {
         exit;
     }
 }
-
+$error ="";
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $description = $_POST['description'];
+            
+    if (strlen($title) > 90) {
+        $error = 'Title cannot exceed 90 characters.';
+    }else if(strlen($description) > 300){
+        $error = 'Description cannot exceed 90 characters.';
+    }else{
 
-    $stmt = $pdo->prepare('UPDATE reports SET title = :title, description = :description WHERE report_id = :report_id');
-        
-    // Bind values securely to the query
-    $stmt->execute([
-        ':title' => $title,
-        ':description' => $description,
-        ':report_id' => $id,
-    ]);
+        $stmt = $pdo->prepare('UPDATE reports SET title = :title, description = :description WHERE report_id = :report_id');
+            
+        // Bind values securely to the query
+        $stmt->execute([
+            ':title' => $title,
+            ':description' => $description,
+            ':report_id' => $id,
+        ]);
 
-    header('Location: read.php');
-    exit;
+        header('Location: read.php');
+        exit;
+    }
 }
 ?>
 
@@ -51,9 +58,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="container">
         <h1>Update Report</h1>
+        <?php if ($error): ?>
+        <p style="color: red;"><?= htmlspecialchars($error) ?></p>
+        <?php endif; ?>
         <form method="POST">
-            <input type="text" name="title" value="<?= htmlspecialchars($report['title']) ?>" maxlength="90" required>
-            <textarea name="description" maxlength="300" required><?= htmlspecialchars($report['description']) ?></textarea>
+            <input type="text" name="title" value="<?= htmlspecialchars($report['title']) ?>"  required>
+            <textarea name="description"  required><?= htmlspecialchars($report['description']) ?></textarea>
             <button type="submit">Update Report</button>
         </form>
     </div>
