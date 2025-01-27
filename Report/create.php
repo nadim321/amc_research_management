@@ -2,7 +2,9 @@
 require '../Common/auth.php';
 require '../Common/db.php';
 require '../Common/csrf.php';
+require '../vendor/autoload.php';
 
+use Ramsey\Uuid\Uuid;
 // Check if user has permission (Admin or Researcher)
 if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 2) {
     echo "You do not have permission to create reports.";
@@ -19,10 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (strlen($title) > 90) {
         $error = 'Title cannot exceed 90 characters.';
     }else if(strlen($description) > 300){
-        $error = 'Description cannot exceed 90 characters.';
+        $error = 'Description cannot exceed 300 characters.';
     }else{
-        $stmt = $pdo->prepare("INSERT INTO reports (title, description, created_by) VALUES (:title, :description, :created_by)");
+        $stmt = $pdo->prepare("INSERT INTO reports (report_id , title, description, created_by) VALUES (:id, :title, :description, :created_by)");
         $stmt->execute([
+            ':id' => Uuid::uuid4()->toString(),
             ':title' => $title,
             ':description' => $description,
             ':created_by' => $created_by

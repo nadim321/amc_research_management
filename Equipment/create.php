@@ -2,6 +2,9 @@
 require '../Common/auth.php';
 require '../Common/db.php';
 require '../Common/csrf.php';
+require '../vendor/autoload.php';
+
+use Ramsey\Uuid\Uuid;
 
 // Check if the user is Admin or Research Assistant
 if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 3) {
@@ -18,10 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (strlen($name) > 90) {
         $error = 'Title cannot exceed 90 characters.';
     }else{
-        $stmt = $pdo->prepare('INSERT INTO equipment (name, usage_status, availability, added_by) 
-                                VALUES (:name, :usage_status, :availability, :added_by)');
+        $stmt = $pdo->prepare('INSERT INTO equipment (equipment_id , name, usage_status, availability, added_by) 
+                                VALUES (:id, :name, :usage_status, :availability, :added_by)');
             // Execute the statement with the sanitized data
             $stmt->execute([
+                ':id' => Uuid::uuid4()->toString(),
                 ':name' => $name,
                 ':usage_status' => $usage_status,
                 ':availability' => $availability,

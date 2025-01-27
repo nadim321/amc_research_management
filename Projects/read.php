@@ -32,7 +32,7 @@ foreach ($projects as &$project) {
     // Decrypt the fields
     $project['title'] = decrypt_data($project['title'], $encryption_key, $iv);
     $project['description'] = decrypt_data($project['description'], $encryption_key, $iv);
-    $project['team_members'] = decrypt_data($project['name'], $encryption_key, $iv);
+    // $project['team_members'] = decrypt_data($project['name'], $encryption_key, $iv);
 
 }
 
@@ -58,12 +58,23 @@ foreach ($projects as &$project) {
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
-            <?php foreach ($projects as &$project): ?>
+            <?php foreach ($projects as &$project):
+                
+                $ids= $project['team_members'];
+                $stmt2 = $pdo->query("Select * from researchers where researcher_id in ($ids)");
+                $researchers = $stmt2->fetchAll();
+                $researcherTitle = "";
+                foreach ($researchers as $researcher){
+                    $rIv = base64_decode($researcher['iv']);
+                    $researcherTitle = $researcherTitle . decrypt_data($researcher['name'], $encryption_key, $rIv) .", ";
+                }
+
+                ?>
                 
             <tr>
                 <td><?= htmlspecialchars($project['title']) ?></td>
                 <td><?= htmlspecialchars($project['description']) ?></td>
-                <td><?= htmlspecialchars($project['team_members']) ?></td>
+                <td><?= htmlspecialchars($researcherTitle) ?></td>
                 <td><?= htmlspecialchars($project['funding']) ?></td>
                 <td><?= htmlspecialchars($project['status']) ?></td>
                 <td>

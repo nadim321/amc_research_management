@@ -2,6 +2,9 @@
 require '../Common/auth.php';
 require '../Common/db.php';
 require '../Common/csrf.php';
+require '../vendor/autoload.php';
+
+use Ramsey\Uuid\Uuid;
 
 // Restrict to Admin and Researchers
 if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 2) {
@@ -42,11 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         // Store the encrypted data and IV in the database
-        $stmt = $pdo->prepare('INSERT INTO researchers (name, contact_info, expertise, assigned_projects, iv) 
-                                VALUES (:name, :contact_info, :expertise, :assigned_projects, :iv)');
+        $stmt = $pdo->prepare('INSERT INTO researchers (researcher_id , name, contact_info, expertise, assigned_projects, iv) 
+                                VALUES (:id, :name, :contact_info, :expertise, :assigned_projects, :iv)');
 
         // Bind values securely to the query
         $stmt->execute([
+            ':id' => Uuid::uuid4()->toString(),
             ':name' => $encrypted_name,
             ':contact_info' => $encrypted_contact_info,
             ':expertise' => $encrypted_expertise,

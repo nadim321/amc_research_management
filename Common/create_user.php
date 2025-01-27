@@ -2,6 +2,9 @@
 require 'auth.php'; // Ensures only logged-in users can access
 require 'db.php'; // Database connection
 require 'csrf.php';
+require '../vendor/autoload.php';
+
+use Ramsey\Uuid\Uuid;
 
 // Only allow Admins to create users
 if ($_SESSION['role_id'] != 1) {
@@ -37,10 +40,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $password = password_hash($password, PASSWORD_BCRYPT);
 
             // Prepare the query using named parameters
-            $stmt = $pdo->prepare('INSERT INTO users (name, email, password, role_id) VALUES (:name, :email, :password, :role_id)');
+            $stmt = $pdo->prepare('INSERT INTO users (user_id , name, email, password, role_id) VALUES (:id , :name, :email, :password, :role_id)');
 
             // Execute the query with an associative array of named parameters
             $stmt->execute([
+                ':id' => Uuid::uuid4()->toString(),
                 ':name' => $name,
                 ':email' => $email,
                 ':password' => $password, // Ensure the password is hashed using password_hash()

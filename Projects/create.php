@@ -2,7 +2,9 @@
 require '../Common/auth.php';
 require '../Common/db.php';
 require '../Common/csrf.php';
+require '../vendor/autoload.php';
 
+use Ramsey\Uuid\Uuid;
 // Restrict to Admin and Researchers
 if ($_SESSION['role_id'] != 1 && $_SESSION['role_id'] != 2) {
     die("You do not have permission to access this page.");
@@ -30,13 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the form data
     $title = $_POST['title'];
     $description = $_POST['description'];
-    $team_members = $_POST['team_members']; // Convert array to comma-separated string
+    $team_members =  isset($_POST['team_members']) ? implode(',', $_POST['team_members']) : ''; // Convert array to comma-separated string
     $funding = $_POST['funding'];
 
     if (strlen($title) > 90) {
         $error = 'Title cannot exceed 90 characters.';
     }else if(strlen($description) > 300){
-        $error = 'Description cannot exceed 90 characters.';
+        $error = 'Description cannot exceed 300 characters.';
     }else{
 
         $iv = openssl_random_pseudo_bytes($iv_length);
@@ -46,15 +48,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Encrypt the sensitive fields
         $encrypted_title = encrypt_data($title, $encryption_key, $iv);
         $encrypted_description = encrypt_data($description, $encryption_key, $iv);
-        $encrypted_team_members = encrypt_data($team_members, $encryption_key, $iv);
         $encrypted_funding = $funding;
-    
+    // print_r($team_members)
         // Store the project in the database with the IV
-        $stmt = $pdo->prepare('INSERT INTO projects (title, description, team_members, funding, created_by, iv) 
-                               VALUES (:title, :description, :team_members, :funding, :created_by, :iv)');
+        $stmt = $pdo->prepare('INSERT INTO projects (project_id , title, description, team_members, funding, created_by, iv) 
+                               VALUES (:id , :title, :description, :team_members, :funding, :created_by, :iv)');
         
         // Bind values securely to the query
         $stmt->execute([
+            ':id' => Uuid::uuid4()->toString(),
             ':title' => $encrypted_title,
             ':description' => $encrypted_description,
             ':team_members' => $team_members,
@@ -89,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="text" name="title" placeholder="Project Title"  value="<?= htmlspecialchars('') ?>" required>
         <textarea name="description" placeholder="Project Description"  value="<?= htmlspecialchars('') ?>" required rows="4" cols="50"></textarea>
             <label for="team_members">Assign Team Members:</label>
-            <select name="team_members" > <!-- Multiple selection for team members -->
+            <select name="team_members[]" multiple required> <!-- Multiple selection for team members -->
                 <?php foreach ($researchers as $researcher): 
                     $rIv = base64_decode($researcher['iv']);
                     $researcherName = decrypt_data($researcher['name'], $encryption_key, $rIv);

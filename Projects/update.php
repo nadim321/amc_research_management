@@ -45,14 +45,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Encrypt data before saving to the database
     $title = $_POST['title'];
     $description = $_POST['description'];
-    $team_members = $_POST['team_members'];
+    $team_members =  isset($_POST['team_members']) ? implode(',', $_POST['team_members']) : ''; // Convert array to comma-separated string
     $funding = $_POST['funding'];
 
     
     if (strlen($title) > 90) {
         $error = 'Title cannot exceed 90 characters.';
     }else if(strlen($description) > 300){
-        $error = 'Description cannot exceed 90 characters.';
+        $error = 'Description cannot exceed 300 characters.';
     }else{
         // Encrypt the fields
         $encrypted_title = encrypt_data($title, $encryption_key, $iv); 
@@ -95,7 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" name="title" value="<?= htmlspecialchars($project['title']) ?>"  required>
             <textarea name="description"  required><?= htmlspecialchars($project['description']) ?></textarea>
             <label for="team_members">Update Team Members:</label>
-            <select name="team_members" required>
+            <select name="team_members[]" multiple required>
                 <?php foreach ($researchers as &$researcher): 
                     $rIv = base64_decode($researcher['iv']);
                    $encrypted_researcher = decrypt_data($researcher['name'], $encryption_key, $rIv);

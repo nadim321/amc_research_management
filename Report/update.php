@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (strlen($title) > 90) {
         $error = 'Title cannot exceed 90 characters.';
     }else if(strlen($description) > 300){
-        $error = 'Description cannot exceed 90 characters.';
+        $error = 'Description cannot exceed 300 characters.';
     }else{
 
         $stmt = $pdo->prepare('UPDATE reports SET title = :title, description = :description WHERE report_id = :report_id');
