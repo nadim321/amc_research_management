@@ -66,7 +66,7 @@ $researchers = $stmt->fetchAll();
                 <td><?= htmlspecialchars($decrypted_name, ENT_QUOTES, 'UTF-8') ?></td>
                 <td><?= htmlspecialchars($decrypted_contact_info, ENT_QUOTES, 'UTF-8') ?></td>
                 <td><?= htmlspecialchars($decrypted_expertise, ENT_QUOTES, 'UTF-8') ?></td>
-                <td><?= htmlspecialchars($projectTitle, ENT_QUOTES, 'UTF-8') ?></td>
+                <td><?= htmlspecialchars(rtrim($projectTitle,", "), ENT_QUOTES, 'UTF-8') ?></td>
                 <td>
                     <a href="update.php?id=<?= $researcher['researcher_id'] ?>">Edit</a>
                     <?php if ($_SESSION['role_id'] == 1): ?>

@@ -39,6 +39,7 @@ $project['title'] = decrypt_data($project['title'], $encryption_key, $iv);
 $project['description'] = decrypt_data($project['description'], $encryption_key, $iv);
 $project['team_members'] = decrypt_data($project['team_members'], $encryption_key, $iv);
 $project['funding'] = $project['funding'];
+$project['status'] = $project['status'];
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -47,12 +48,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = $_POST['description'];
     $team_members =  isset($_POST['team_members']) ? implode(',', $_POST['team_members']) : ''; // Convert array to comma-separated string
     $funding = $_POST['funding'];
+    $status = $_POST['status'];
 
     
     if (strlen($title) > 90) {
         $error = 'Title cannot exceed 90 characters.';
     }else if(strlen($description) > 300){
         $error = 'Description cannot exceed 300 characters.';
+    }else if($funding > 1000){
+        $error = 'Funding cannot exceed 1000.';
     }else{
         // Encrypt the fields
         $encrypted_title = encrypt_data($title, $encryption_key, $iv); 
@@ -61,13 +65,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Prepare the SQL update statement with encrypted values
         $stmt = $pdo->prepare('UPDATE projects SET title = :title, description = :description, 
-                            team_members = :team_members, funding = :funding
+                            team_members = :team_members, funding = :funding, status = :status
                             WHERE project_id = :id');
         $stmt->execute([
             ':title' => $encrypted_title,
             ':description' => $encrypted_description,
             ':team_members' => $team_members,
             ':funding' => $funding,
+            ':status' => $status,
             ':id' => $id
         ]);
 
@@ -106,6 +111,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endforeach; ?>
             </select>
             <input type="number"  name="funding" value="<?= htmlspecialchars($project['funding']) ?>" required>
+            <select name="status">
+                <option value="ongoing" <?= $project['status'] == 'ongoing' ? 'selected' : '' ?>>Ongoing</option>
+                <option value="completed" <?= $project['status'] == 'completed' ? 'selected' : '' ?>>Completed</option>
+            </select>
             <button type="submit">Update Project</button>
         </form>
         <a href="../Common/dashboard.php">Back to Dashboard</a>

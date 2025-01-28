@@ -74,7 +74,7 @@ foreach ($projects as &$project) {
             <tr>
                 <td><?= htmlspecialchars($project['title']) ?></td>
                 <td><?= htmlspecialchars($project['description']) ?></td>
-                <td><?= htmlspecialchars($researcherTitle) ?></td>
+                <td><?= htmlspecialchars(rtrim($researcherTitle, ", ")) ?></td>
                 <td><?= htmlspecialchars($project['funding']) ?></td>
                 <td><?= htmlspecialchars($project['status']) ?></td>
                 <td>

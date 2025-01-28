@@ -39,7 +39,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Title cannot exceed 90 characters.';
     }else if(strlen($description) > 300){
         $error = 'Description cannot exceed 300 characters.';
-    }else{
+    }else if($funding > 1000){
+        $error = 'Funding cannot exceed 1000.';
+    }
+    else{
 
         $iv = openssl_random_pseudo_bytes($iv_length);
         // Generate a random IV for encryption (you should store this IV in the database)
