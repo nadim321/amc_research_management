@@ -26,7 +26,7 @@ $equipment = $stmt->fetchAll();
     <link rel="stylesheet" href="../readStyle.css">
 </head>
 <body>
-    <div class="table-container">
+    <div class="form-container">
         <h1>Equipment Inventory</h1>
         <table>
             <tr>

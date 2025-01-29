@@ -12,10 +12,10 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     // Fetch equipment details
-    $stmt = $pdo->prepare('SELECT * FROM equipment WHERE added_by = :user_id');
+    $stmt = $pdo->prepare('SELECT * FROM equipment WHERE added_by = :user_id and equipment_id=:id');
         
     // Execute the statement with the sanitized session user_id
-    $stmt->execute([':user_id' => $_SESSION['user_id']]);
+    $stmt->execute([':user_id' => $_SESSION['user_id'] , ':id' => $id]);
     $equipment = $stmt->fetch();
 
     if (!$equipment) {
