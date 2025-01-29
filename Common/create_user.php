@@ -23,6 +23,7 @@ function validate_password($password) {
     }
 }
 $error = '';
+$msg = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
@@ -50,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 ':password' => $password, // Ensure the password is hashed using password_hash()
                 ':role_id' => $role_id
             ]);
-            echo "User created successfully.";
+            $msg = "User created successfully.";
         }
       
     } else {
@@ -70,9 +71,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="form-container">
         <h1>Create User</h1>
-        <?php if ($error): ?>
-        <p style="color: red;"><?= htmlspecialchars($error) ?></p>
-        <?php endif; ?>
+        <?php if ($error){ ?>
+            <p style="color: red;"><?= htmlspecialchars($error) ?></p>
+        <?php }else if($msg){ ?>
+            <p style="color: #6200clearea; font-weight: bold ; text-align: center"><?= htmlspecialchars($msg) ?></p>
+        <?php }?>
         <form method="POST">
             <input type="text" name="name" placeholder="Full Name"  required>
             <input type="email" name="email" placeholder="Email Address" required>

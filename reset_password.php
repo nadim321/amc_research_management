@@ -61,12 +61,17 @@ if (isset($_GET['token'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resetStyle.css">
 </head>
-<?php if ($error): ?>
-        <p style="color: red;"><?= htmlspecialchars($error) ?></p>
+<body>
+    <div class="form-container">
+        <h1>Reset password</h1>
+        <?php if ($error): ?>
+            <p style="color: red;"><?= htmlspecialchars($error) ?></p>
         <?php endif; ?>
-<form method="POST">
-    <input type="password" name="password" placeholder="Enter new password" required>
-    <button type="submit">Set Password</button>
-</form>
+        <form method="POST">
+            <input type="password" name="password" placeholder="Enter new password" required>
+            <button type="submit">Set Password</button>
+        </form>
+    </div>
+</body>

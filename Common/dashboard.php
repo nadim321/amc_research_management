@@ -27,7 +27,9 @@ $user = $stmt->fetch();
         <p class="role">Your role: 
             <?= ($user_role == 1) ? 'Admin' : (($user_role == 2) ? 'Researcher' : 'Research Assistant') ?>
         </p>
-        <a href="profile.php" class="btn">My Profile</a>
+        <div class="footer-links">
+             <a href="profile.php" class="btn">My Profile</a>
+        </div>
 
         <div class="card">
             <h3>Researchers</h2>

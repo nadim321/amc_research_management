@@ -11,7 +11,7 @@ require 'vendor/autoload.php';
 //Create an instance; passing `true` enables exceptions
 $mail = new PHPMailer(true);
 
-
+$msg = '';  
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = htmlspecialchars($_POST['email']);
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $resetLink = "http://localhost/amc_research_management/reset_password.php?token=$token";
         // mail($email, "Password Setup Link", "Click here to set your password: $resetLink");
 
-           
+    
 
         try {
             //Server settings                    //Enable verbose debug output
@@ -57,9 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->Body    = $resetLink;
         
             $mail->send();
-            echo 'Message has been sent </br></br>';
+            $msg = 'Message has been sent';
         } catch (Exception $e) {
-            echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            $msg = "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
 
 
@@ -77,9 +77,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="resetStyle.css">
 </head>
-<form method="POST">
-    <input type="email" name="email" placeholder="Enter your email" required>
-    <button type="submit">Send Password Setup Link</button>
-</form>
+<body>
+    <div class="form-container">
+        <h1>Reset password</h1>
+        <?php if ($msg): ?>
+            <p><?= htmlspecialchars($msg) ?></p>
+        <?php endif; ?>
+        <form method="POST">
+            <input type="email" name="email" placeholder="Re-Enter your email" required>
+            <button type="submit">Send Password Setup Link</button>
+        </form>
+    </div>
+</body>
