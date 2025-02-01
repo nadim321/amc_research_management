@@ -6,7 +6,6 @@ require 'csrf.php';
 
 // Encryption settings (must match those used in create.php)
 $encryption_key = 'mySecretKey'; // This should match the key you used for encryption
-$iv = "mySecretKey12345";
 
 // Decryption function (same as in create.php)
 function decrypt_data($data, $encryption_key, $iv) {
@@ -47,7 +46,8 @@ $projects = $stmt->fetchAll();
 
         <h2>Your Projects</h2>
         <ul>
-            <?php foreach ($projects as $project):                
+            <?php foreach ($projects as $project): 
+                $iv = base64_decode($project['iv']);
                 ?>
             <li><?= decrypt_data($project['title'], $encryption_key, $iv); ?></li>
             <?php endforeach; ?>
