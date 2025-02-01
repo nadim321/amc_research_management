@@ -1,109 +1,148 @@
 /* General Page Styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #5fc8f5, #4eb7da);
+    color: #333;
     margin: 0;
     padding: 0;
-    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-.form-container {
-    max-width: 90%;
+.container {
+    width: 90%;
+    max-width: 1000px;
     margin: 50px auto;
-    padding: 20px;
+    padding: 40px;
     background: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(246, 243, 243, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.container::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 200px;
+    height: 200px;
+    background: rgba(255, 94, 120, 0.2);
+    border-radius: 50%;
+    z-index: -1;
 }
 
 h1 {
     text-align: center;
-    color: #444;
-    margin-bottom: 20px;
+    color: #f6f9fa;
+    font-size: 36px;
+    margin-bottom: 25px;
+    font-weight: bold;
 }
 
+div{
+    width: 80%;
+}
 /* Table Styling */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    margin-top: 25px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 table th, table td {
-    padding: 12px 15px;
+    padding: 18px;
     text-align: left;
-    border: 1px solid #ddd;
+    border: none;
 }
 
 table th {
-    background-color: #007bff;
+    background-color: #82c9ef;
     color: white;
     font-weight: bold;
+    text-transform: uppercase;
 }
 
-table tr:nth-child(even) {
-    background-color: #f9f9f9;
+table tr {
+    transition: all 0.3s ease;
 }
 
 table tr:hover {
-    background-color: #f1f1f1;
+    background-color: #f1e4e6;
+    transform: scale(1.02);
 }
 
 /* Buttons and Links */
 a {
     text-decoration: none;
-    color: #007bff;
     font-weight: bold;
-    padding-right: 10px;
+    transition: all 0.3s ease;
 }
 
-a:hover {
-    color: #0056b3;
-    text-decoration: underline;
-}
-
-/* Specific Button Styles */
-a[href*="delete"] {
-    color: #dc3545;
-    padding: 6px 12px;
-    border: 1px solid #dc3545;
-    border-radius: 4px;
-    background-color: #f8d7da;
+a.btn {
+    padding: 12px 18px;
+    border-radius: 12px;
     display: inline-block;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-a[href*="delete"]:hover {
-    background-color: #f5c6cb;
-    color: #a71d2a;
+a.btn-primary {
+    background: linear-gradient(135deg, #5cd9ec, #4cb7e9);
+    color: white;
 }
 
-a[href*="update"] {
-    color: #28a745;
-    padding: 6px 12px;
-    border: 1px solid #28a745;
-    border-radius: 4px;
-    background-color: #d4edda;
-    display: inline-block;
+a.btn-primary:hover {
+    background: linear-gradient(135deg, #6dc3f9, #71abfc);
+    transform: scale(1.05);
 }
 
-a[href*="update"]:hover {
-    background-color: #c3e6cb;
-    color: #19692c;
+a.btn-danger {
+    background: linear-gradient(135deg, #6eb4d7, #5effe4);
+    color: white;
+}
+
+a.btn-danger:hover {
+    background: linear-gradient(135deg, #6b96d7, #5df0f2);
+    transform: scale(1.05);
+}
+
+a.btn-success {
+    background: linear-gradient(135deg, #28a745, #52c41a);
+    color: white;
+}
+
+a.btn-success:hover {
+    background: linear-gradient(135deg, #19692c, #409c13);
+    transform: scale(1.05);
 }
 
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
     .container {
-        padding: 10px;
+        padding: 25px;
     }
-
+    
     table th, table td {
         font-size: 14px;
-        padding: 8px 10px;
+        padding: 12px;
     }
-
+    
     h1 {
-        font-size: 20px;
+        font-size: 26px;
+    }
+    
+    a.btn {
+        padding: 10px 15px;
+        font-size: 14px;
     }
 }

@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <!-- Left Side -->
         <div class="left-panel">
             <h1>Welcome to website</h1>
-            <p>AMC Research Management System</p>
+            <p>My Website</p>
         </div>
 
         <!-- Right Side -->

@@ -1,6 +1,6 @@
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #6a11cb, #2575fc);
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #9afffc, #989af9);
     color: #fff;
     margin: 0;
     padding: 0;
@@ -11,24 +11,43 @@ body {
 }
 
 .form-container {
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 30px 40px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    background: #fff;
+    border-radius: 25px;
+    padding: 60px;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
     max-width: 500px;
     width: 100%;
     color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.form-container::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #68c3dc, #70a4f2);
+    z-index: -1;
 }
 
 .form-container h1 {
-    text-align: center;
-    color: #6a11cb;
-    margin-bottom: 20px;
+    color: #4c9bc2;
+    margin-bottom: 30px;
+    font-size: 30px;
+    font-weight: bold;
 }
 
 form {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 input[type="text"],
@@ -38,63 +57,61 @@ input[type="password"],
 textarea,
 select {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    padding: 16px;
+    margin: 15px 0;
+    border: 2px solid #ccc;
+    border-radius: 20px;
     font-size: 16px;
     outline: none;
     box-sizing: border-box;
-    transition: 0.3s ease;
-    font-family: Arial, sans-serif;
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    background: #5ed4e9;
 }
 
-input[type="text"]::placeholder,
-textarea::placeholder {
-    font-family: Arial, sans-serif;
-    font-size: 16px;
-    color: #aaa;
-}
-
-input[type="text"]:focus,
-input[type="number"]:focus,
+input:focus,
 textarea:focus,
 select:focus {
-    border-color: #6a11cb;
-    box-shadow: 0 0 6px rgba(106, 17, 203, 0.4);
+    border-color: #33ecec;
+    box-shadow: 0 0 12px rgba(52, 152, 214, 0.5);
 }
 
 textarea {
-    resize: none;
+    resize: vertical;
+    min-height: 140px;
 }
 
 button {
-    padding: 12px;
-    background-color: #6a11cb;
-    color: #fff;
+    padding: 16px;
+    background: linear-gradient(135deg, #4eddf6, #53f4e6);
+    color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
+    border-radius: 20px;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s ease;
-    margin-top: 10px;
+    transition: all 0.3s ease;
+    margin-top: 25px;
+    width: 100%;
 }
 
 button:hover {
-    background-color: #2575fc;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background: linear-gradient(135deg, #67f9fe, #3bb1ce);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 a {
     display: block;
-    margin-top: 20px;
+    margin-top: 25px;
     text-align: center;
-    color: #2575fc;
+    color: #4eb6e2;
     text-decoration: none;
     font-weight: bold;
+    font-size: 16px;
+    transition: color 0.3s ease;
 }
 
 a:hover {
     text-decoration: underline;
+    color: #627eee;
 }
