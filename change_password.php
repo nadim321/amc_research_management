@@ -61,6 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="POST">
             <input type="password" name="current_password" placeholder="Current Password" required>
             <input type="password" name="new_password" placeholder="New Password" required>
+            <input type="password" name="conf_password" placeholder="Confirm Password" required>
             <button type="submit">Change Password</button>
         </form>
         <a href="Common/dashboard.php">Back to Dashboard</a>
